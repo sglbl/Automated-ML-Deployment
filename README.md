@@ -1,40 +1,30 @@
 # ML Ops with GitHub Actions and Azure Machine Learning
 
-<p align="center">
-  <img src="docs/images/aml.svg" height="80"/>
-  <img src="https://i.ya-webdesign.com/images/a-plus-png-2.png" alt="plus" height="40"/>
-  <img src="docs/images/actions.png" alt="Azure Machine Learning + Actions" height="80"/>
-</p>
-
 This repository is to set up prediction function for data science / machine learning project with automated training and deployment using GitHub Actions and Azure Machine Learning. 
 
 # Getting started
 
 ### YouTube Video
 
-Click on the image to view the video on YouTube. The video shows you the setup process, which is also described below:
-[![Azure Machine Learning GitHub Actions - Setup Guide](http://img.youtube.com/vi/bmFr0LYo_6o/maxresdefault.jpg)](http://www.youtube.com/watch?v=bmFr0LYo_6o "Azure Machine Learning GitHub Actions - Setup Guide")
+Used this video to setup:
+[Azure Machine Learning GitHub Actions - Setup Guide](http://www.youtube.com/watch?v=bmFr0LYo_6o "Azure Machine Learning GitHub Actions - Setup Guide")
 
 ### 1. Prerequisites
 
 The following prerequisites are required to make this repository work:
 - Azure subscription
 - Contributor access to the Azure subscription
-- Access to [GitHub Actions](https://github.com/features/actions)
-
-If you don’t have an Azure subscription, create a free account before you begin. Try the [free or paid version of Azure Machine Learning](https://aka.ms/AMLFree) today.
+- Access to GitHub Actions
 
 ### 2. Create repository
 
-To get started with ML Ops, simply create a new repo based off this template, by clicking on the green "Use this template" button:
+To get started with ML Ops, simply created a new repo based off this template repo:
 
-<p align="center">
-  <img src="https://help.github.com/assets/images/help/repository/use-this-template-button.png" alt="GitHub Template repository" width="700"/>
-</p>
+https://github.com/machine-learning-apps/ml-template-azure
 
 ### 3. Setting up the required secrets
 
-A service principal needs to be generated for authentication and getting access to your Azure subscription. We suggest adding a service principal with contributor rights to a new resource group or to the one where you have deployed your existing Azure Machine Learning workspace. Just go to the Azure Portal to find the details of your resource group or workspace. Then start the Cloud CLI or install the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) on your computer and execute the following command to generate the required credentials:
+A service principal needs to be generated for authentication and getting access to your Azure subscription. First, I added a service principal with contributor rights to a new resource group or to the one where I've deployed existing Azure Machine Learning workspace. Then I went to the Azure Portal to find the details of your resource group or workspace. Then I've started the Cloud CLI / Azure CLI on computer and executed the following command to generate the required credentials:
 
 ```sh
 # Replace {service-principal-name}, {subscription-id} and {resource-group} with your 
@@ -57,38 +47,28 @@ This will generate the following JSON output:
 }
 ```
 
-Add this JSON output as [a secret](https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets#creating-encrypted-secrets) with the name `AZURE_CREDENTIALS` in your GitHub repository:
+I added this JSON output as [a secret](https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets#creating-encrypted-secrets) with the name `AZURE_CREDENTIALS` in my GitHub repository:
 
-<p align="center">
-  <img src="docs/images/secrets.png" alt="GitHub Template repository" width="700"/>
-</p>
+To do so, Settings tab -> Secrets -> Add the new secret with the name `AZURE_CREDENTIALS` to repository.
 
-To do so, click on the Settings tab in your repository, then click on Secrets and finally add the new secret with the name `AZURE_CREDENTIALS` to your repository.
+### 4. Defining workspace parameters
 
-Please follow [this link](https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets#creating-encrypted-secrets) for more details. 
+First I've modified the parameters in the <a href="/.cloud/.azure/workspace.json">`/.cloud/.azure/workspace.json"` file</a> in your repository, so that the GitHub Actions create or connect to the desired Azure Machine Learning workspace.
 
-### 4. Define your workspace parameters
+I used the same value for the `resource_group` parameter that I have used when generating the azure credentials. (If you already have an Azure ML Workspace under that resource group, change the `name` parameter in the JSON file to the name of your workspace, if you want the Action to create a new workspace in that resource group, pick a name for your new workspace, and assign it to the `name` parameter. You can also delete the `name` parameter, if you want the action to use the default value, which is the repository name.)
 
-You have to modify the parameters in the <a href="/.cloud/.azure/workspace.json">`/.cloud/.azure/workspace.json"` file</a> in your repository, so that the GitHub Actions create or connect to the desired Azure Machine Learning workspace. Just click on the link and edit the file.
-
-Please use the same value for the `resource_group` parameter that you have used when generating the azure credentials. If you already have an Azure ML Workspace under that resource group, change the `name` parameter in the JSON file to the name of your workspace, if you want the Action to create a new workspace in that resource group, pick a name for your new workspace, and assign it to the `name` parameter. You can also delete the `name` parameter, if you want the action to use the default value, which is the repository name.
-
-Once you save your changes to the file, the predefined GitHub workflow that trains and deploys a model on Azure Machine Learning gets triggered. Check the actions tab to view if your actions have successfully run.
-
-<p align="center">
-  <img src="docs/images/actions_tab.png" alt="GitHub Actions Tab" width="700"/>
-</p>
+After saving changes to the file, the predefined GitHub workflow that trains and deploys a model on Azure Machine Learning gets triggered. Check the actions tab to view if your actions have successfully run.
 
 ### 5. Modify the code
 
-Now you can start modifying the code in the <a href="/code">`code` folder</a>, so that your model and not the provided sample model gets trained on Azure. Where required, modify the environment yaml so that the training and deployment environments will have the correct packages installed in the conda environment for your training and deployment.
-Upon pushing the changes, actions will kick off your training and deployment run. Check the actions tab to view if your actions have successfully run.
+Then I modified the code in the <a href="/code">`code` folder</a>, so that my model and not the provided sample model gets trained on Azure. (Where required, modify the environment yaml so that the training and deployment environments will have the correct packages installed in the conda environment for your training and deployment.
+Upon pushing the changes, actions will kick off your training and deployment run. Check the actions tab to view if your actions have successfully run.)
 
-Comment lines 39 to 55 in your <a href="/.github/workflows/train_deploy.yml">`"/.github/workflows/train_deploy.yml"` file</a> if you only want to train the model. Uncomment line 7 to 8, if you only want to kick off the workflow when pushing changes to the `"/code/"` file.
+Comment lines 39 to 55 in <a href="/.github/workflows/train_deploy.yml">`"/.github/workflows/train_deploy.yml"` file</a> if only want to train the model. Uncomment line 7 to 8, if only want to kick off the workflow when pushing changes to the `"/code/"` file.
 
-### 6. Viewing your AML resources and runs
+### 6. Viewing AML resources and runs
 
-The log outputs of your action will provide URLs for you to view the resources that have been created in AML. Alternatively, you can visit the [Machine Learning Studio](https://ml.azure.com/) to view the progress of your runs, etc. For more details, read the documentation below.
+The log outputs of your action will provide URLs to view the resources that have been created in AML. Alternatively, visiting the [Machine Learning Studio](https://ml.azure.com/) to view the progress of your runs, etc.
 
 # Documentation
 
@@ -122,18 +102,6 @@ The template uses the open source Azure certified Actions listed below. Click on
 - [aml-registermodel](https://github.com/Azure/aml-registermodel) - Registers a model to Azure Machine Learning
 - [aml-deploy](https://github.com/Azure/aml-deploy) - Deploys a model and creates an endpoint for the model
 
-## Known issues
-
-### Error: MissingSubscriptionRegistration
-
-Error message: 
-```sh
-Message: ***'error': ***'code': 'MissingSubscriptionRegistration', 'message': "The subscription is not registered to use namespace 'Microsoft.KeyVault'. See https://aka.ms/rps-not-found for how to register subscriptions.", 'details': [***'code': 'MissingSubscriptionRegistration', 'target': 'Microsoft.KeyVault', 'message': "The subscription is not registered to use namespace 'Microsoft.KeyVault'. See https://aka.ms/rps-not-found for how to register subscriptions
-```
-Solution:
-
-This error message appears, in case the `Azure/aml-workspace` action tries to create a new Azure Machine Learning workspace in your resource group and you have never deployed a Key Vault in the subscription before. We recommend to create an Azure Machine Learning workspace manually in the Azure Portal. Follow the [steps on this website](https://docs.microsoft.com/en-us/azure/machine-learning/tutorial-1st-experiment-sdk-setup#create-a-workspace) to create a new workspace with the desired name. After ou have successfully completed the steps, you have to make sure, that your Service Principal has access to the resource group and that the details in your <a href="/.cloud/.azure/workspace.json">`/.cloud/.azure/workspace.json"` file</a> are correct and point to the right workspace and resource group.
-
 # What is MLOps?
 
 <p align="center">
@@ -143,18 +111,3 @@ This error message appears, in case the `Azure/aml-workspace` action tries to cr
 MLOps empowers data scientists and machine learning engineers to bring together their knowledge and skills to simplify the process of going from model development to release/deployment. ML Ops enables you to track, version, test, certify and reuse assets in every part of the machine learning lifecycle and provides orchestration services to streamline managing this lifecycle. This allows practitioners to automate the end to end machine Learning lifecycle to frequently update models, test new models, and continuously roll out new ML models alongside your other applications and services.
 
 This repository enables Data Scientists to focus on the training and deployment code of their machine learning project (`code` folder of this repository). Once new code is checked into the `code` folder of the master branch of this repository the GitHub workflow is triggered and open source Azure Machine Learning actions are used to automatically manage the training through to deployment phases.
-
-# Contributing
-
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
-
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
-
