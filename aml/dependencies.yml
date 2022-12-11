@@ -1,0 +1,18 @@
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - pillow
+  - opencv-python
+  - gunicorn  
+  - numpy
+  - python=3.6.2
+  - pip
+  - pip:
+    - h5py # We need to use the same version we have used for training
+    - keras # We need to add it manually
+    - tensorflow
+    - azureml-defaults
+    - pillow
+    - inference-schema[numpy-support]
+RUN pip ins
