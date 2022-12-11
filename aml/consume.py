@@ -48,7 +48,7 @@ if __name__ == "__main__":
     # Endpoint URL
     url = 'https://ep-try3.southcentralus.inference.ml.azure.com/score'
     # AMLToken key for the endpoint
-    api_key = '54rcDiIWtOGoZHrpe84qbsBKj5zcjT6E'
+    api_key = 'API_KEY'
     if not api_key:
         raise Exception("A key should be provided to invoke the endpoint")
 
