@@ -64,7 +64,7 @@ jobs:
         
       - name: 'Copy model files to artifact directory'
         run: |
-          cp -r models/age_model_a/. python-app/model/
+          cp -r models/age_model_a python-app/model/
         
 #       - name: 'Deploy model to Azure Web App'
 #         uses: azure/webapps-deploy@v2
