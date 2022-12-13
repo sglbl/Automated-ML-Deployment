@@ -15,7 +15,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
       - name: Set up Python version
         uses: actions/setup-python@v1
@@ -48,6 +49,8 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 #       - name: Download artifact from build job
 #         uses: actions/download-artifact@v2
 #         with:
