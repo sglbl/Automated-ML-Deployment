@@ -32,13 +32,13 @@ jobs:
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
       
-      - name: Upload artifact for deployment jobs
-        uses: actions/upload-artifact@v2
-        with:
-          name: python-app
-          path: |
-            . 
-            !venv/
+#       - name: Upload artifact for deployment jobs
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: python-app
+#           path: |
+#             . 
+#             !venv/
 
   deploy:
     runs-on: ubuntu-latest
@@ -61,3 +61,15 @@ jobs:
           app-name: 'age-prediction'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_229FDF161AA347DB981BBE9BC915A41A }}
+        
+      - name: 'Deploy model to Azure Web App'
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'age-prediction'
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_<web-app-name> }}
+          local-artifact: true
+          artifact-name: 'age_model_a/saved_model.pb'
+          artifact-type: 'folder'
+#           artifact-link: 'https://<storage-account-name>.blob.core.windows.net/<container-name>/<model-folder>'
+          artifact-link: 'https://sgmlworkstorageef1c6630d.blob.core.windows.net/azureml-blobstore-825cc236-ef0c-4097-a4c3-c66b60e48acf/WebUpload/221208203447-1128685028/age_model_a'
