@@ -33,13 +33,18 @@ jobs:
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
       
-#       - name: Upload artifact for deployment jobs
-#         uses: actions/upload-artifact@v2
-#         with:
-#           name: python-app
-#           path: |
-#             . 
-#             !venv/
+      - name: Upload artifact for deployment jobs
+        uses: actions/upload-artifact@v2
+        with:
+          name: python-app
+          path: |
+            . 
+            !venv/
+      - name: Create python-app/model/ directory
+        run: mkdir -p python-app/model/
+      
+      - name: Copy age_model_a to python-app/model/
+        run: cp -r models/age_model_a python-app/model/
 
   deploy:
     runs-on: ubuntu-latest
@@ -51,25 +56,28 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-#       - name: Download artifact from build job
-#         uses: actions/download-artifact@v2
-#         with:
-#           name: python-app
-#           path: .
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: python-app
+          path: .
           
-#       - name: 'Deploy to Azure Web App'
-#         uses: azure/webapps-deploy@v2
-#         id: deploy-to-webapp
-#         with:
-#           app-name: 'age-prediction'
-#           slot-name: 'Production'
-#           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_229FDF161AA347DB981BBE9BC915A41A }}
+      - name: 'Deploy to Azure Web App'
+        uses: azure/webapps-deploy@v2
+        id: deploy-to-webapp
+        with:
+          app-name: 'age-prediction'
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_229FDF161AA347DB981BBE9BC915A41A }}
     
-      - name: Create python-app/model/ directory
-        run: mkdir -p python-app/model/
+    
+#       - name: Create python-app/model/ directory
+#         run: mkdir -p python-app/model/
       
-      - name: Copy age_model_a to python-app/model/
-        run: cp -r models/age_model_a python-app/model/
+#       - name: Copy age_model_a to python-app/model/
+#         run: cp -r models/age_model_a python-app/model/
+            
+            
             
 #       - name: 'Copy model files to artifact directory'
 #         run: |
