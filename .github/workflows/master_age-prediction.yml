@@ -54,13 +54,13 @@ jobs:
           name: python-app
           path: .
           
-      - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v2
-        id: deploy-to-webapp
-        with:
-          app-name: 'age-prediction'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_229FDF161AA347DB981BBE9BC915A41A }}
+#       - name: 'Deploy to Azure Web App'
+#         uses: azure/webapps-deploy@v2
+#         id: deploy-to-webapp
+#         with:
+#           app-name: 'age-prediction'
+#           slot-name: 'Production'
+#           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_229FDF161AA347DB981BBE9BC915A41A }}
         
       - name: 'Copy model files to artifact directory'
         run: |
