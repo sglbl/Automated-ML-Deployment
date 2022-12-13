@@ -64,12 +64,18 @@ jobs:
 #           app-name: 'age-prediction'
 #           slot-name: 'Production'
 #           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_229FDF161AA347DB981BBE9BC915A41A }}
-        
-      - name: 'Copy model files to artifact directory'
-        run: |
-          pwd
-          cd models
-          cp -r age_model_a python-app/model/
+    
+      - name: Create python-app/model/ directory
+        run: mkdir -p python-app/model/
+      
+      - name: Copy age_model_a to python-app/model/
+        run: cp -r age_model_a python-app/model/
+            
+#       - name: 'Copy model files to artifact directory'
+#         run: |
+#           pwd
+#           cd models
+#           cp -r age_model_a python-app/model/
         
 #       - name: 'Deploy model to Azure Web App'
 #         uses: azure/webapps-deploy@v2
