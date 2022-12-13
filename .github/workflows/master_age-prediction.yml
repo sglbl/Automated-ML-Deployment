@@ -69,7 +69,7 @@ jobs:
         run: mkdir -p python-app/model/
       
       - name: Copy age_model_a to python-app/model/
-        run: cp -r age_model_a python-app/model/
+        run: cp -r models/age_model_a python-app/model/
             
 #       - name: 'Copy model files to artifact directory'
 #         run: |
