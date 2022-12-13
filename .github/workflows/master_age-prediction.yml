@@ -64,6 +64,7 @@ jobs:
         
       - name: 'Copy model files to artifact directory'
         run: |
+          pwd
           cd models
           cp -r age_model_a python-app/model/
         
