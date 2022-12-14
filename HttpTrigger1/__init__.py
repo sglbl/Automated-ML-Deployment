@@ -68,8 +68,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         "Access-Control-Allow-Origin": "*"
     }
 
-    # req_body = req.get_json()
-    req_body = req.get_data(False)
+    req_body = req.get_json()
+    # req_body = req.get_data(False)
     image = req_body.get('image')
     model_path = req_body.get('model_path')
 
