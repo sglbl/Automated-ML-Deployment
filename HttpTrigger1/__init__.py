@@ -70,7 +70,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     # image = req_body.get('image')
     # model_path = req_body.get('model_path')
     
-    image = req.params.get('image')
+    # image = req.params.get('image')
     model_path = req.params.get('model_path')
     if not model_path:
         try:
@@ -79,15 +79,17 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             pass
         else:
             model_path = req_body.get('model_path')
-            image = req_body.get('image')    
+            # image = req_body.get('image')    
     
     # image = req.params.get('image')
     # model_path = req.params.get('model_path')
     
     print("model:", model_path)
     # print("image:", image)
-    
-    return func.HttpResponse(f"Model, {model_path}. image ignore for now")
+    if model_path:
+        return func.HttpResponse(f"Model, {model_path}. image ignore for now")
+    else:
+        return func.HttpResponse("No model path but still success",status_code=200)
 
     # Model path will be got by flutter function
     global model
