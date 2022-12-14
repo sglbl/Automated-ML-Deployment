@@ -63,12 +63,6 @@ def int32_to_int(obj):
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed  a request.')
-
-    headers = {
-        "Content-type": "application/json",
-        "Access-Control-Allow-Origin": "*"
-    }
-
     
     # req_body = req.get_data(False)
     
@@ -85,14 +79,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             pass
         else:
             model_path = req_body.get('model_path')
-            image = req_body.get('image')
-    
+            image = req_body.get('image')    
     
     # image = req.params.get('image')
     # model_path = req.params.get('model_path')
     
     print("model:", model_path)
-    print("image:", image)
+    # print("image:", image)
     
     return func.HttpResponse(f"Model, {model_path}. image ignore for now")
 
