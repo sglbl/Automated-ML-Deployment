@@ -69,13 +69,32 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         "Access-Control-Allow-Origin": "*"
     }
 
-    req_body = req.get_json()
+    
     # req_body = req.get_data(False)
-    image = req_body.get('image')
-    model_path = req_body.get('model_path')
-
-    print("modal:", model)
+    
+    # # req_body = req.get_json()
+    # image = req_body.get('image')
+    # model_path = req_body.get('model_path')
+    
+    image = req.params.get('image')
+    model_path = req.params.get('model_path')
+    if not model_path:
+        try:
+            req_body = req.get_json()
+        except ValueError:
+            pass
+        else:
+            model_path = req_body.get('model_path')
+            image = req_body.get('image')
+    
+    
+    # image = req.params.get('image')
+    # model_path = req.params.get('model_path')
+    
+    print("model:", model_path)
     print("image:", image)
+    
+    return func.HttpResponse(f"Model, {model_path}. image ignore for now")
 
     # Model path will be got by flutter function
     global model
