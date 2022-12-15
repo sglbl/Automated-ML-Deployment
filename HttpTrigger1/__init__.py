@@ -4,7 +4,7 @@ import numpy as np
 import tensorflow as tf
 import cv2 as cv
 # from PIL import Image
-import base64
+# import base64
 import logging
 import azure.functions as func
 
