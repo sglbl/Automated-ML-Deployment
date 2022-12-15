@@ -63,12 +63,6 @@ def int32_to_int(obj):
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed  a request.')
     
-    # req_body = req.get_data(False)
-    
-    # # req_body = req.get_json()
-    # image = req_body.get('image')
-    # model_path = req_body.get('model_path')
-    
     model_path = req.params.get('model_path')
     image = req.params.get('image')
     if not model_path:
