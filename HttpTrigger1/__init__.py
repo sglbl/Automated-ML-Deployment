@@ -90,6 +90,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     else:
         return func.HttpResponse("No model path but still success",status_code=200)
 
+
     # Model path will be got by flutter function
     global model
     model = InferenceModel(model_path)        
