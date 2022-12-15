@@ -1,9 +1,9 @@
-# import io
-# import json
-# import numpy as np
-# import tensorflow as tf
-# import cv2 as cv
-# from PIL import Image
+import io
+import json
+import numpy as np
+import tensorflow as tf
+import cv2 as cv
+from PIL import Image
 import base64
 import logging
 import azure.functions as func
@@ -69,7 +69,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     # image = req_body.get('image')
     # model_path = req_body.get('model_path')
     
-    # image = req.params.get('image')
+    image = req.params.get('image')
     model_path = req.params.get('model_path')
     if not model_path:
         try:
@@ -78,13 +78,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             pass
         else:
             model_path = req_body.get('model_path')
-            # image = req_body.get('image')    
+            image = req_body.get('image')    
     
     # image = req.params.get('image')
     # model_path = req.params.get('model_path')
     
     print("model:", model_path)
-    # print("image:", image)
+    print("image:", image)
     if model_path:
         return func.HttpResponse(f"Model, {model_path}. image ignore for now")
     else:
