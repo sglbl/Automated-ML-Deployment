@@ -69,8 +69,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     # image = req_body.get('image')
     # model_path = req_body.get('model_path')
     
-    image = req.params.get('image')
     model_path = req.params.get('model_path')
+    image = req.params.get('image')
     if not model_path:
         try:
             req_body = req.get_json()
