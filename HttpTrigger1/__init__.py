@@ -78,7 +78,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             model_path = req_body.get('model_path')
             image = req_body.get('image')    
 
-    # Model path will be got by flutter function
+    # Model path will be get by flutter function
     global model
     model = InferenceModel(model_path)        
     preds = model.predict(image)
