@@ -17,7 +17,7 @@ class InferenceModel():
  
     def face_border_detector(self, image):
         # get xml from repo
-        face_cascade = cv.CascadeClassifier('../models/haarcascade_frontalface_default.xml')
+        face_cascade = cv.CascadeClassifier('models/haarcascade_frontalface_default.xml')
         gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(gray, 1.1, 4)
         biggest_face = [0,0,0,0]
