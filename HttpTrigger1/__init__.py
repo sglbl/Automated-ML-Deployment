@@ -17,7 +17,6 @@ class InferenceModel():
  
     def face_border_detector(self, image):
         # get xml from repo
-        return func.HttpResponse("Entered into face_border_detector section.")
         face_cascade = cv.CascadeClassifier('../models/haarcascade_frontalface_default.xml')
         gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(gray, 1.1, 4)
@@ -61,16 +60,15 @@ def int32_to_int(obj):
     
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed  a request.')
+    logging.info('Python HTTP trigger function processed a request.')
     
-    # req_body = req.get_data(False)
-    
-    # # req_body = req.get_json()
-    # image = req_body.get('image')
-    # model_path = req_body.get('model_path')
-    
-    # image = req.params.get('image')
+    headers = {
+        "Content-type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+    }
+        
     model_path = req.params.get('model_path')
+    image = req.params.get('image')
     if not model_path:
         try:
             req_body = req.get_json()
@@ -78,18 +76,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             pass
         else:
             model_path = req_body.get('model_path')
-            # image = req_body.get('image')    
-    
-    # image = req.params.get('image')
-    # model_path = req.params.get('model_path')
-    
-    print("model:", model_path)
-    # print("image:", image)
-    if model_path:
-        return func.HttpResponse(f"Model, {model_path}. image ignore for now")
-    else:
-        return func.HttpResponse("No model path but still success",status_code=200)
-
+            image = req_body.get('image')    
 
     # Model path will be got by flutter function
     global model
