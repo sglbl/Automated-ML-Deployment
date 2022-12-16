@@ -2,6 +2,13 @@
   "IsEncrypted": false,
   "Values": {
     "FUNCTIONS_WORKER_RUNTIME": "python",
-    "AzureWebJobsStorage": "UseDevelopmentStorage=true"
+    "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=agepredictor2rgbff9;AccountKey=jgxuQAwiKLoQUBjPFslBgSTO8WrlfQVkbS6i2VuLVns/yCK5/rZQH1/2VWB394juP2CBoebheadH+AStnyzaoA==;EndpointSuffix=core.windows.net",
+    "APPINSIGHTS_INSTRUMENTATIONKEY": "2d4be9f1-2389-48c1-a102-dc8a2d787a73",
+    "APPLICATIONINSIGHTS_CONNECTION_STRING": "InstrumentationKey=2d4be9f1-2389-48c1-a102-dc8a2d787a73;IngestionEndpoint=https://centralus-2.in.applicationinsights.azure.com/;LiveEndpoint=https://centralus.livediagnostics.monitor.azure.com/",
+    "BUILD_FLAGS": "UseExpressBuild",
+    "ENABLE_ORYX_BUILD": "true",
+    "FUNCTIONS_EXTENSION_VERSION": "~4",
+    "SCM_DO_BUILD_DURING_DEPLOYMENT": "1",
+    "XDG_CACHE_HOME": "/tmp/.cache"
   }
 }
