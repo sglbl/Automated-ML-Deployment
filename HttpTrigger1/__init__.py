@@ -18,11 +18,26 @@ class InferenceModel():
     def face_border_detector(self, image):
         # get xml from repo
         face_cascade = cv.CascadeClassifier('models/haarcascade_frontalface_default.xml')
+    
         gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(gray, 1.1, 4)
         biggest_face = [0,0,0,0]
+        if len(faces) == 0:
+            logging.info("No faces found in file1")
+            face_cascade2 = cv.CascadeClassifier('models/haarcascade_frontalface_alt.xml')
+            faces = face_cascade2.detectMultiScale(gray, 1.1, 4)
+            if len(faces) == 0:
+                #print("No faces found in file2")
+                face_cascade3 = cv.CascadeClassifier('models/haarcascade_frontalface_alt2.xml')
+                faces = face_cascade3.detectMultiScale(gray, 1.1, 4)
+                logging.info(faces)
+                if len(faces) == 0:
+                    logging.info("No faces found in file3")
+                    face_cascade4 = cv.CascadeClassifier('models/haarcascade_frontalface_alt_tree.xml')
+                    faces = face_cascade4.detectMultiScale(gray, 1.1, 4)
+
         for i, (x, y, w, h) in enumerate(faces):
-            if (biggest_face[2] - biggest_face[0]) < (w - x):
+            if abs(biggest_face[2] - biggest_face[0]) < abs(w - x):
                 biggest_face = [x, y, w, h]
                 
         [x,y,w,h] = biggest_face
