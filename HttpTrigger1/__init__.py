@@ -19,6 +19,7 @@ class InferenceModel():
         # get xml from repo
         face_cascade = cv.CascadeClassifier('models/haarcascade_frontalface_default.xml')
     
+        # cv.imwrite("gray.jpg", image)
         gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(gray, 1.1, 4)
         biggest_face = [0,0,0,0]
@@ -36,10 +37,14 @@ class InferenceModel():
                     face_cascade4 = cv.CascadeClassifier('models/haarcascade_frontalface_alt_tree.xml')
                     faces = face_cascade4.detectMultiScale(gray, 1.1, 4)
 
+        logging.info(f"Faces : {faces}")
         for i, (x, y, w, h) in enumerate(faces):
-            if abs(biggest_face[2] - biggest_face[0]) < abs(w - x):
+            logging.info("iter")
+            if abs(biggest_face[2]) < abs(w):
                 biggest_face = [x, y, w, h]
-                
+                logging.info(f"Biggest face : {biggest_face}")
+        
+        logging.info(f"At the end {biggest_face}")
         [x,y,w,h] = biggest_face
         cv.rectangle(image, (x, y), (x + w, y + h), (255, 0, 0), 2)
         # cv.imshow("image", image)
